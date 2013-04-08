@@ -5,6 +5,6 @@
         <title></title>
     </head>
     <body>
-        COOL
+        COOL TEST
     </body>
 </html>
