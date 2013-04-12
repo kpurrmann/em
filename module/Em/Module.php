@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -14,10 +15,12 @@ use Zend\Mvc\MvcEvent;
 
 class Module
 {
+
     public function onBootstrap(MvcEvent $e)
     {
         $e->getApplication()->getServiceManager()->get('translator');
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
+        $eventManager->attach('dispatch', array($this, 'setLayout'));
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
     }
@@ -27,14 +30,35 @@ class Module
         return include __DIR__ . '/config/module.config.php';
     }
 
+    /**
+     * Methods sets Controller specific layout
+     * 
+     * @param string $layout
+     */
+    public function setLayout($e)
+    {
+        $matches = $e->getRouteMatch();
+        $controller = $matches->getParam('controller');
+        if (preg_match('/' . __NAMESPACE__ . '\\//i', $controller)) {
+            // not a controller from this module
+            return;
+        }
+        if (preg_match('/admin/i', $controller)) {
+            // Set the layout template
+            $viewModel = $e->getViewModel();
+            $viewModel->setTemplate('layout/admin');
+        }
+    }
+
     public function getAutoloaderConfig()
     {
         return array(
-            'Zend\Loader\StandardAutoloader' => array(
-                'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
-                ),
-            ),
+           'Zend\Loader\StandardAutoloader' => array(
+              'namespaces' => array(
+                 __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
+              ),
+           ),
         );
     }
+
 }

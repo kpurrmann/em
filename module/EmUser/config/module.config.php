@@ -21,6 +21,7 @@ return array(
       // telling ZfcUserDoctrineORM to skip the entities it defines
       'enable_default_entities' => false,
       'enable_registration' => false,
+      'login_redirect_route' => 'administration'
    ),
    'bjyauthorize' => array(
       // Using the authentication identity provider, which basically reads the roles from the auth service's identity

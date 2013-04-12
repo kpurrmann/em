@@ -1,0 +1,5 @@
+[12-Apr-2013 17:42:56 Europe/Berlin] PHP Warning:  preg_match(): No ending delimiter '/' found in /var/www/em/module/Em/Module.php on line 42
+[12-Apr-2013 17:43:11 Europe/Berlin] PHP Warning:  preg_match(): No ending delimiter '/' found in /var/www/em/module/Em/Module.php on line 42
+[12-Apr-2013 17:43:12 Europe/Berlin] PHP Warning:  preg_match(): No ending delimiter '/' found in /var/www/em/module/Em/Module.php on line 42
+[12-Apr-2013 17:43:23 Europe/Berlin] PHP Warning:  preg_match(): No ending delimiter '/' found in /var/www/em/module/Em/Module.php on line 42
+[12-Apr-2013 17:43:35 Europe/Berlin] PHP Warning:  preg_match(): Unknown modifier '/' in /var/www/em/module/Em/Module.php on line 46
