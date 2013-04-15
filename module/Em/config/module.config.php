@@ -66,7 +66,7 @@ return array(
                'route' => '/customer',
                'defaults' => array(
                   '__NAMESPACE__' => 'Em\Controller',
-                  'controller' => 'admin',
+                  'controller' => 'event',
                   'action' => 'index',
                ),
             ),
@@ -106,7 +106,7 @@ return array(
    'controllers' => array(
       'invokables' => array(
          'Em\Controller\Index' => 'Em\Controller\IndexController',
-         'Em\Controller\Admin' => 'Em\Controller\AdminController'
+         'Em\Controller\Event' => 'Em\Controller\EventController'
       ),
    ),
    'view_manager' => array(
