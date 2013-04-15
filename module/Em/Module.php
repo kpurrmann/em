@@ -43,7 +43,7 @@ class Module
             // not a controller from this module
             return;
         }
-        if (preg_match('/admin/i', $controller)) {
+        if (preg_match('/(admin|user)/i', $controller)) {
             // Set the layout template
             $viewModel = $e->getViewModel();
             $viewModel->setTemplate('layout/admin');
