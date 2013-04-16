@@ -18,7 +18,6 @@ class Module
 
     public function onBootstrap(MvcEvent $e)
     {
-        $e->getApplication()->getServiceManager()->get('translator');
         $eventManager = $e->getApplication()->getEventManager();
         $eventManager->attach('dispatch', array($this, 'setLayout'));
         $moduleRouteListener = new ModuleRouteListener();
@@ -39,13 +38,8 @@ class Module
     {
         $matches = $e->getRouteMatch();
         $controller = $matches->getParam('controller');
-        if (preg_match('/' . __NAMESPACE__ . '\\//i', $controller)) {
-            // not a controller from this module
-            return;
-        }
-        
+
         if (!preg_match('/(index)/i', $controller)) {
-            // Set the layout template
             $viewModel = $e->getViewModel();
             $viewModel->setTemplate('layout/admin');
         }

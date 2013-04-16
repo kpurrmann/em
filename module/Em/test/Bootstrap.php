@@ -24,6 +24,18 @@ class Bootstrap
 
         if (is_readable($vendorPath . '/autoload.php')) {
             $loader = include $vendorPath . '/autoload.php';
+            AutoloaderFactory::factory(array(
+               'Zend\Loader\ClassMapAutoloader' => array(array(
+                     'Em\Module' => __DIR__ . '/../Module.php',
+               )),
+               'Zend\Loader\StandardAutoloader' => array(
+                  'autoregister_zf' => true,
+                  'namespaces' => array(
+                     'Em' => __DIR__ . '/../src/Em  ',
+                     __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
+                  ),
+               ),
+            ));
             return;
         }
 
