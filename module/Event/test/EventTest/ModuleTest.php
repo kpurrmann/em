@@ -1,12 +1,7 @@
 <?php
 
-/**
- * @link      https://github.com/weierophinney/PhlySimplePage for the canonical source repository
- * @copyright Copyright (c) 2012 Matthew Weier O'Phinney (http://mwop.net)
- * @license   https://github.com/weierophinney/PhlySimplePage/blog/master/LICENSE.md New BSD License
- */
 
-namespace EmTest;
+namespace EventTest;
 
 use PHPUnit_Framework_TestCase as TestCase;
 use stdClass;
@@ -37,7 +32,7 @@ class ModuleTest extends TestCase
 
     /**
      *
-     * @var \Em\Module
+     * @var \Event\Module
      */
     protected $module;
 
@@ -55,7 +50,7 @@ class ModuleTest extends TestCase
         $this->event->setTarget($this->application);
         $this->event->setRouteMatch(new \Zend\Mvc\Router\Http\RouteMatch(array()));
 
-        $this->module = new \Em\Module();
+        $this->module = new \Event\Module();
     }
 
     public function tearDown()
@@ -73,15 +68,6 @@ class ModuleTest extends TestCase
         return $services;
     }
 
-    public function testEventManagerHasSetLayout()
-    {
-        $this->module->onBootstrap($this->event);
-        $events = $this->application->getEventManager();
-        $listeners = $events->getListeners(MvcEvent::EVENT_DISPATCH);
-        $listener = $listeners->top();
-        $this->assertTrue(in_array('setLayout', $listener->getCallback()));
-    }
-
     public function testGetConfig()
     {
         $this->assertTrue(is_array($this->module->getConfig()));
@@ -90,17 +76,6 @@ class ModuleTest extends TestCase
     public function testGetAutoConfig()
     {
         $this->assertTrue(is_array($this->module->getAutoloaderConfig()));
-    }
-
-    public function testSetLayout()
-    {
-        $this->module->setLayout($this->event);
-        $this->assertEquals('layout/admin', $this->event->getViewModel()->getTemplate());
-
-        $this->event->setRouteMatch(new \Zend\Mvc\Router\Http\RouteMatch(array('controller' => 'index')));
-        $this->event->getViewModel()->setTemplate('layout/layout');
-        $this->module->setLayout($this->event);
-        $this->assertEquals('layout/layout', $this->event->getViewModel()->getTemplate());
     }
 
 }

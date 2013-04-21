@@ -1,6 +1,6 @@
 <?php
 
-namespace EmTest\TestAsset;
+namespace EventTest\TestAsset;
 
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerInterface;
