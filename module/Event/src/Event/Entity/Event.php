@@ -1,29 +1,46 @@
 <?php
 
-namespace Event\Entity;
-
 /**
  * Description of Event
  *
  * @author Kevin Purrmann <k.purrmann@familie-redlich.de>
  */
+
+namespace Event\Entity;
+
+use Zend\Form\Annotation;
+
+/**
+ * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
+ * @Annotation\Name("Event")
+ */
 class Event implements EventInterface
 {
 
     /**
-     *
+     * @Annotation\Type("Zend\Form\Element\Hidden")
+     * @Annotation\Validator({"name":"Digits"})
      * @var int
      */
     protected $id;
 
     /**
      *
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Filter({"name":"StringTrim"})
      * @var string
      */
     protected $title;
 
     /**
-     *
+     * @Annotation\Type("Zend\Form\Element\Textarea")
+     * @Annotation\Filter({"name":"StringTrim"})
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * @Annotation\Type("Zend\Form\Element\DateTime")
      * @var \Zend\Stdlib\DateTime
      */
     protected $event_date;
@@ -81,9 +98,34 @@ class Event implements EventInterface
         return $this;
     }
 
+    /**
+     *
+     * @param string $title
+     * @return \Event\Entity\Event
+     */
     public function setTitle($title)
     {
         $this->title = $title;
+        return $this;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     *
+     * @param type $description
+     * @return \Event\Entity\Event
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
         return $this;
     }
 

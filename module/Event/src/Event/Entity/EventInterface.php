@@ -34,6 +34,18 @@ interface EventInterface
     public function setTitle($title);
 
     /**
+     * @return string Returns description of EventEntity
+     */
+    public function getDescription();
+
+    /**
+     *
+     * @param string $description
+     * @return EventInterface Returns object of type EventInterface
+     */
+    public function setDescription($description);
+
+    /**
      * @return \Zend\Stdlib\DateTime
      */
     public function getEventDate();

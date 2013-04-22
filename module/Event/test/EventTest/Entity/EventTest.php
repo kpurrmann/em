@@ -80,4 +80,29 @@ class EventTest extends TestCase
         $this->eventEntity->setId($id);
     }
 
+    public function testSetDescriptionAndGetDescription()
+    {
+
+        $desc = 'Testeintrag';
+        $this->eventEntity->setDescription($desc);
+        $this->assertEquals($desc, $this->eventEntity->getDescription());
+    }
+
+    public function testCanBuildForm()
+    {
+        $builder = new \Zend\Form\Annotation\AnnotationBuilder();
+        $form = $builder->createForm($this->eventEntity);
+        $this->assertTrue($form instanceof \Zend\Form\Form);
+        $elements = $form->getElements();
+        $this->assertArrayHasKey('id', $elements);
+        $this->assertArrayHasKey('title', $elements);
+        $this->assertArrayHasKey('description', $elements);
+        $this->assertArrayHasKey('event_date', $elements);
+
+        $this->assertTrue($form->get('id') instanceof \Zend\Form\Element\Hidden);
+        $this->assertTrue($form->get('title') instanceof \Zend\Form\Element\Text);
+        $this->assertTrue($form->get('description') instanceof \Zend\Form\Element\Textarea);
+        $this->assertTrue($form->get('event_date') instanceof \Zend\Form\Element\DateTime);
+    }
+
 }
