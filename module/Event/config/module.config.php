@@ -20,16 +20,20 @@ return array(
                ),
             ),
          ),
-         // The following is a route to simplify getting started creating
-         // new controllers and actions without needing to create a new
-         // module. Simply drop new controllers in, and you can access them
-         // using the path /application/:controller/:action
+      // The following is a route to simplify getting started creating
+      // new controllers and actions without needing to create a new
+      // module. Simply drop new controllers in, and you can access them
+      // using the path /application/:controller/:action
       ),
    ),
    'service_manager' => array(
       'factories' => array(
          'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
+         'Event\Form\Event' => 'Event\Form\EventFormFactory',
       ),
+      'invokables' => array(
+         'Event\Service\Event' => 'Event\Service\EventService'
+      )
    ),
    'translator' => array(
       'locale' => 'en_US',
@@ -42,15 +46,14 @@ return array(
       ),
    ),
    'controllers' => array(
-      'invokables' => array(
-         'Event\Controller\Index' => 'Event\Controller\IndexController',
-         'Event\Controller\Event' => 'Event\Controller\EventController'
+      'factories' => array(
+         'Event\Controller\Event' => 'Event\Controller\EventControllerFactory'
       ),
    ),
    'view_helpers' => array(
-     'invokables' => array(
-       'showForm' => 'Event\View\Helper\ShowForm'
-     ),
+      'invokables' => array(
+         'showForm' => 'Event\View\Helper\ShowForm'
+      ),
    ),
    'view_manager' => array(
       'display_not_found_reason' => true,
