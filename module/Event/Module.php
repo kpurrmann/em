@@ -12,8 +12,31 @@ namespace Event;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-class Module
+
+class Module implements \Zend\ModuleManager\Feature\BootstrapListenerInterface, \Zend\ModuleManager\Feature\ConfigProviderInterface, \Zend\ModuleManager\Feature\AutoloaderProviderInterface
 {
+
+    /**
+     *
+     * @var \Zend\ServiceManager\ServiceManager
+     */
+    protected $serviceLocator = null;
+
+    public function onBootstrap(\Zend\EventManager\EventInterface $e)
+    {
+        $this->serviceLocator = $e->getApplication()->getServiceManager();
+        /* @var $sharedEventManager \Zend\EventManager\SharedEventManager */
+        $sharedEventManager = $this->serviceLocator->get('SharedEventManager');
+        $sharedEventManager->attach('Event\Service\EventService', 'set-event-form', array($this, 'onFormSet'));
+    }
+
+    public function onFormSet(\Zend\EventManager\EventInterface $e)
+    {
+        $type = $e->getParam('type', 'default');
+        $service = $this->serviceLocator->get('Event\Service\Event');
+        $form = $this->serviceLocator->get('Event\Form\Event');
+        $service->setForm($form, $type);
+    }
 
     public function getConfig()
     {
