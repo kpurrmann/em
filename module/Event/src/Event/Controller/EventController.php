@@ -16,9 +16,28 @@ use Zend\View\Model\ViewModel;
 class EventController extends AbstractActionController
 {
 
+    /**
+     *
+     * @var \EventService
+     */
+    protected $eventService;
+
+    public function setEventService(\Event\Service\EventServiceInterface $eventService)
+    {
+        $this->eventService = $eventService;
+        return $this;
+    }
+
+    public function getEventService()
+    {
+        return $this->eventService;
+    }
+
     public function indexAction()
     {
-        return new ViewModel();
+        return new ViewModel(array(
+           'form' => $this->getEventService()->getForm('update')
+        ));
     }
 
 }
