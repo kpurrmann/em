@@ -92,7 +92,7 @@ class EventTest extends TestCase
     {
         $builder = new \Zend\Form\Annotation\AnnotationBuilder();
         $form = $builder->createForm($this->eventEntity);
-        $this->assertTrue($form instanceof \Zend\Form\Form);
+        $this->assertTrue($form instanceof \Event\Form\Form);
         $elements = $form->getElements();
         $this->assertArrayHasKey('id', $elements);
         $this->assertArrayHasKey('title', $elements);
