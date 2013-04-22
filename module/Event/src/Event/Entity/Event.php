@@ -11,6 +11,7 @@ namespace Event\Entity;
 use Zend\Form\Annotation;
 
 /**
+ * @Annotation\Type("Event\Form\Form")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  * @Annotation\Name("Event")
  */
@@ -20,6 +21,7 @@ class Event implements EventInterface
     /**
      * @Annotation\Type("Zend\Form\Element\Hidden")
      * @Annotation\Validator({"name":"Digits"})
+     * @Annotation\Required(false)
      * @var int
      */
     protected $id;
@@ -28,6 +30,8 @@ class Event implements EventInterface
      *
      * @Annotation\Type("Zend\Form\Element\Text")
      * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Required(true)
+     * @Annotation\Options({"label":"Titel des Events"})
      * @var string
      */
     protected $title;
@@ -35,12 +39,17 @@ class Event implements EventInterface
     /**
      * @Annotation\Type("Zend\Form\Element\Textarea")
      * @Annotation\Filter({"name":"StringTrim"})
+     * @Annotation\Required(false)
+     * @Annotation\Options({"label":"Beschreibung"})
      * @var string
      */
     protected $description;
 
     /**
      * @Annotation\Type("Zend\Form\Element\DateTime")
+     * @Annotation\Validator({"name":"Date", "options" : {"format" : "d.m.Y H:i:s"}})
+     * @Annotation\Options({"label":"Datum"})
+     * @Annotation\Required(true)
      * @var \Zend\Stdlib\DateTime
      */
     protected $event_date;
