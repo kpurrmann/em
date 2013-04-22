@@ -47,6 +47,11 @@ return array(
          'Event\Controller\Event' => 'Event\Controller\EventController'
       ),
    ),
+   'view_helpers' => array(
+     'invokables' => array(
+       'showForm' => 'Event\View\Helper\ShowForm'
+     ),
+   ),
    'view_manager' => array(
       'display_not_found_reason' => true,
       'display_exceptions' => true,
