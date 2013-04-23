@@ -50,8 +50,8 @@ class EventService implements \Zend\EventManager\EventManagerAwareInterface, \Ev
     {
         if (!isset($this->forms[$type])) {
             $this->eventManager->trigger('set-event-form', __CLASS__, array('type' => $type));
-            return $this->forms[$type];
         }
+        return $this->forms[$type];
     }
 
     /**
