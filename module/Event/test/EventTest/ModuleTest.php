@@ -1,6 +1,5 @@
 <?php
 
-
 namespace EventTest;
 
 use PHPUnit_Framework_TestCase as TestCase;
@@ -44,7 +43,7 @@ class ModuleTest extends TestCase
 
         $this->application = new TestAsset\Application();
         $this->application->setEventManager($this->events);
-
+        $this->application->setServiceManager(Bootstrap::getServiceManager());
         $this->event = new MvcEvent();
         $this->event->setApplication($this->application);
         $this->event->setTarget($this->application);
@@ -77,5 +76,22 @@ class ModuleTest extends TestCase
     {
         $this->assertTrue(is_array($this->module->getAutoloaderConfig()));
     }
+
+    public function testOnBootstrap()
+    {
+        $this->module->onBootstrap($this->event->setName(MvcEvent::EVENT_BOOTSTRAP));
+        $serviceLocator = $this->application->getServiceManager();
+        /* @var $sharedEventManager \Zend\EventManager\SharedEventManager */
+        $sharedEventManager = $serviceLocator->get('SharedEventManager');
+        $registeredEvent = $sharedEventManager->getEvents('Event\Service\EventService');
+        $this->assertTrue(is_array($registeredEvent));
+    }
+
+    public function testOnFormSet()
+    {
+        $this->module->onBootstrap($this->event->setName(MvcEvent::EVENT_BOOTSTRAP));
+        $this->module->onFormSet($this->event->setParam('type', 'default'));
+    }
+
 
 }
