@@ -11,6 +11,7 @@ class Application implements ApplicationInterface
 
     protected $events;
     public $services;
+    protected $serviceManager;
 
     public function setEventManager(EventManagerInterface $events)
     {
@@ -48,7 +49,12 @@ class Application implements ApplicationInterface
 
     public function getServiceManager()
     {
+        return $this->serviceManager;
+    }
 
+    public function setServiceManager(\Zend\ServiceManager\ServiceLocatorInterface $service)
+    {
+        $this->serviceManager = $service;
     }
 
     public function run()
