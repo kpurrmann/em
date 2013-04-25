@@ -59,6 +59,10 @@ class Bootstrap
         static::$config = $config;
     }
 
+    /**
+     *
+     * @return ServiceManager
+     */
     public static function getServiceManager()
     {
         return static::$serviceManager;
