@@ -1,5 +1,7 @@
 <?php
 
+namespace Event;
+
 /**
  * Zend Framework (http://framework.zend.com/)
  *
@@ -70,6 +72,19 @@ return array(
       ),
       'template_path_stack' => array(
          __DIR__ . '/../view',
+      ),
+   ),
+   'doctrine' => array(
+      'driver' => array(
+         'event' => array(
+            'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+            'paths' => __DIR__ . '/../src/' . __NAMESPACE__ . '/Entity',
+         ),
+         'orm_default' => array(
+            'drivers' => array(
+              'Event\Entity' => 'event',
+            ),
+         ),
       ),
    ),
 );

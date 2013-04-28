@@ -9,11 +9,14 @@
 namespace Event\Entity;
 
 use Zend\Form\Annotation;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @Annotation\Type("Event\Form\Form")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  * @Annotation\Name("Event")
+ * @ORM\Entity
+ * @ORM\Table(name="events")
  */
 class Event implements EventInterface
 {
@@ -22,6 +25,9 @@ class Event implements EventInterface
      * @Annotation\Type("Zend\Form\Element\Hidden")
      * @Annotation\Validator({"name":"Digits"})
      * @Annotation\Required(false)
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @var int
      */
     protected $id;
@@ -32,6 +38,7 @@ class Event implements EventInterface
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Required(true)
      * @Annotation\Options({"label":"Titel des Events"})
+     * @ORM\Column(type="string")
      * @var string
      */
     protected $title;
@@ -41,6 +48,7 @@ class Event implements EventInterface
      * @Annotation\Filter({"name":"StringTrim"})
      * @Annotation\Required(false)
      * @Annotation\Options({"label":"Beschreibung"})
+     * @ORM\Column(type="text")
      * @var string
      */
     protected $description;
@@ -50,6 +58,7 @@ class Event implements EventInterface
      * @Annotation\Validator({"name":"Date", "options" : {"format" : "d.m.Y H:i:s"}})
      * @Annotation\Options({"label":"Datum"})
      * @Annotation\Required(true)
+     * @ORM\Column(type="datetime")
      * @var \Zend\Stdlib\DateTime
      */
     protected $event_date;
