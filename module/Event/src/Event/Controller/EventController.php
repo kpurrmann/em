@@ -36,8 +36,39 @@ class EventController extends AbstractActionController
     public function indexAction()
     {
         return new ViewModel(array(
-           'form' => $this->getEventService()->getForm('update')
-        ));
+              'events' => $this->getEventService()->getEvents()
+           ));
+    }
+
+    public function editAction()
+    {
+        $form = $this->getEventService()->getForm('update');
+
+        if ($this->getRequest()->isPost()) {
+
+            if ($cancel = $this->getRequest()->getPost('cancel')) {
+                return $this->redirect()->toRoute('events');
+            }
+
+            $this->getEventService()->save($this->getRequest()->getPost());
+        }
+
+        if ($id = $this->params('id')) {
+            $form->bind($this->getEventService()->getEntry($id));
+        }
+
+        return new ViewModel(array(
+              'form' => $form,
+              'id' => $id
+           ));
+    }
+
+    public function deleteAction()
+    {
+        if ($id = $this->params('id')) {
+            $this->getEventService()->delete($id);
+        }
+        return $this->redirect()->toRoute('events');
     }
 
 }

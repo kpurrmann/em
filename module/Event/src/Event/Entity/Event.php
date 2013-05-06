@@ -54,8 +54,8 @@ class Event implements EventInterface
     protected $description;
 
     /**
-     * @Annotation\Type("Zend\Form\Element\DateTime")
-     * @Annotation\Validator({"name":"Date", "options" : {"format" : "d.m.Y H:i:s"}})
+     * @Annotation\Type("Zend\Form\Element\Text")
+     * @Annotation\Validator({"name":"Date", "options" : {"format" : "d.m.Y"}})
      * @Annotation\Options({"label":"Datum"})
      * @Annotation\Required(true)
      * @ORM\Column(type="datetime")
@@ -69,7 +69,7 @@ class Event implements EventInterface
      */
     public function getEventDate()
     {
-        return $this->event_date;
+        return $this->event_date->format('d.m.Y');
     }
 
     /**
@@ -94,9 +94,9 @@ class Event implements EventInterface
      * @param \Zend\Stdlib\DateTime $date
      * @return \Event\Entity\Event
      */
-    public function setEventDate(\Zend\Stdlib\DateTime $date)
+    public function setEventDate($date)
     {
-        $this->event_date = $date;
+        $this->event_date = new \Zend\Stdlib\DateTime($date);
         return $this;
     }
 
@@ -145,6 +145,25 @@ class Event implements EventInterface
     {
         $this->description = $description;
         return $this;
+    }
+
+    /**
+     * 
+     * @param array $array
+     */
+    public function exchangeArray(array $array)
+    {
+        $filter = new \Zend\Filter\Word\UnderscoreToCamelCase();
+        foreach ($array as $key => $value) {
+            if (empty($value)) {
+                continue;
+            }
+            $method = 'set' . ucfirst($filter->filter($key));
+            if (!method_exists($this, $method)) {
+                continue;
+            }
+            $this->$method($value);
+        }
     }
 
 }

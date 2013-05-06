@@ -18,7 +18,8 @@ class EventServiceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->eventService = new \Event\Service\EventService();
+        $mock = $this->getMock('Doctrine\Orm\EntityManager');
+        $this->eventService = new \Event\Service\EventService($mock);
     }
 
     public function testEventServiceImplementsInterfaces()

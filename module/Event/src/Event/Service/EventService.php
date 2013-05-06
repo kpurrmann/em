@@ -18,9 +18,20 @@ class EventService implements \Zend\EventManager\EventManagerAwareInterface, \Ev
 
     /**
      *
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $entityManager;
+
+    /**
+     *
      * @var array
      */
     protected $forms = array();
+
+    public function __construct(\Doctrine\ORM\EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
 
     /**
      *
@@ -46,10 +57,10 @@ class EventService implements \Zend\EventManager\EventManagerAwareInterface, \Ev
      * @param string $type
      * @return \Zend\Form\Form
      */
-    public function getForm($type = 'default')
+    public function getForm($type = 'default', $id = null)
     {
         if (!isset($this->forms[$type])) {
-            $this->eventManager->trigger('set-event-form', __CLASS__, array('type' => $type));
+            $this->eventManager->trigger('set-event-form', __CLASS__, array('type' => $type, 'id' => $id));
         }
         return $this->forms[$type];
     }
@@ -62,6 +73,62 @@ class EventService implements \Zend\EventManager\EventManagerAwareInterface, \Ev
     public function setForm(\Zend\Form\Form $form, $type = 'default')
     {
         $this->forms[$type] = $form;
+    }
+
+    /**
+     *
+     * @return \Doctrine\Common\Collections\ArrayCollection<\Event\Entity\Event>
+     */
+    public function getEvents()
+    {
+        $repo = $this->entityManager->getRepository('\Event\Entity\Event');
+        $adapter = new \DoctrineORMModule\Paginator\Adapter\DoctrinePaginator(new \Doctrine\ORM\Tools\Pagination\Paginator($repo->createQueryBuilder('id')));
+        $paginator = new \Zend\Paginator\Paginator($adapter);
+        $paginator->setDefaultItemCountPerPage(10);
+        return $paginator;
+    }
+
+    /**
+     *
+     * @param int||string $id
+     * @return \Event\Entity\Event
+     */
+    public function getEntry($id)
+    {
+        $repo = $this->entityManager->getRepository('\Event\Entity\Event');
+        return $repo->find($id);
+    }
+
+    /**
+     *
+     * @param array $data
+     */
+    public function save($data)
+    {
+        $form = $this->getForm();
+        $form->setData($data);
+
+        if ($form->isValid()) {
+
+            $repo = $this->entityManager->getRepository('\Event\Entity\Event');
+            $event = $repo->find($data['id']);
+
+            if (!$event) {
+                $event = new \Event\Entity\Event();
+            }
+
+            $event->exchangeArray($form->getData());
+            $this->entityManager->persist($event);
+            $this->entityManager->flush();
+        }
+    }
+
+    public function delete($id)
+    {
+        $repo = $this->entityManager->getRepository('\Event\Entity\Event');
+        $event = $repo->find($id);
+        $this->entityManager->remove($event);
+        $this->entityManager->flush();
     }
 
 }

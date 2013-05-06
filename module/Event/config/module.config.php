@@ -12,30 +12,41 @@ namespace Event;
 return array(
    'router' => array(
       'routes' => array(
-         'home' => array(
+         'events' => array(
             'type' => 'Zend\Mvc\Router\Http\Literal',
             'options' => array(
-               'route' => '/',
+               'route' => '/events',
                'defaults' => array(
                   'controller' => 'Event\Controller\Event',
                   'action' => 'index',
                ),
             ),
+            'may_terminate' => true,
+            'child_routes' => array(
+               'action' => array(
+                  'type' => 'segment',
+                  'options' => array(
+                     'route' => '/:action[/:id]',
+                     'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9-]*',
+                        'id' => '[0-9]*',
+                     ),
+                     'defaults' => array(
+                        'action' => 'index',
+                     ),
+                  ),
+               ),
+            ),
          ),
-      // The following is a route to simplify getting started creating
-      // new controllers and actions without needing to create a new
-      // module. Simply drop new controllers in, and you can access them
-      // using the path /application/:controller/:action
       ),
    ),
    'service_manager' => array(
       'factories' => array(
          'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
          'Event\Form\Event' => 'Event\Form\EventFormFactory',
+         'Event\Service\Event' => 'Event\Service\EventServiceFactory'
       ),
-      'invokables' => array(
-         'Event\Service\Event' => 'Event\Service\EventService'
-      )
+      'invokables' => array()
    ),
    'translator' => array(
       'locale' => 'en_US',
@@ -54,7 +65,8 @@ return array(
    ),
    'view_helpers' => array(
       'invokables' => array(
-         'showForm' => 'Event\View\Helper\ShowForm'
+         'showForm' => 'Event\View\Helper\ShowForm',
+         'HtmlTable' => 'Event\View\Helper\HtmlTable',
       ),
    ),
    'view_manager' => array(
@@ -82,7 +94,7 @@ return array(
          ),
          'orm_default' => array(
             'drivers' => array(
-              'Event\Entity' => 'event',
+               'Event\Entity' => 'event',
             ),
          ),
       ),

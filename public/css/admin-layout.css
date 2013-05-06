@@ -1,0 +1,16 @@
+tr .btn-group {
+    visibility: hidden;
+}
+
+tr:hover .btn-group {
+    visibility: visible;
+}
+
+tr {
+    min-height: 1.5em;
+}
+
+.table td.controls,
+.table th.controls {
+    text-align: right;
+}

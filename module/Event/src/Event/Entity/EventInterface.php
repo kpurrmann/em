@@ -55,5 +55,5 @@ interface EventInterface
      * @param \Zend\Stdlib\DateTime $date
      * @return EventInterface
      */
-    public function setEventDate(\Zend\Stdlib\DateTime $date);
+    public function setEventDate($date);
 }

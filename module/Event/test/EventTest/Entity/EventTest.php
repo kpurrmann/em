@@ -54,9 +54,9 @@ class EventTest extends TestCase
     public function testSetEventDateAndGetDate()
     {
         $date = new \Zend\Stdlib\DateTime();
-        $this->eventEntity->setEventDate($date);
+        $this->eventEntity->setEventDate($date->format('d.m.Y'));
 
-        $this->assertEquals($date, $this->eventEntity->getEventDate());
+        $this->assertEquals($date->format('d.m.Y'), $this->eventEntity->getEventDate());
     }
 
     public function testSetTitleAndGetTitle()
@@ -102,7 +102,7 @@ class EventTest extends TestCase
         $this->assertTrue($form->get('id') instanceof \Zend\Form\Element\Hidden);
         $this->assertTrue($form->get('title') instanceof \Zend\Form\Element\Text);
         $this->assertTrue($form->get('description') instanceof \Zend\Form\Element\Textarea);
-        $this->assertTrue($form->get('event_date') instanceof \Zend\Form\Element\DateTime);
+        $this->assertTrue($form->get('event_date') instanceof \Zend\Form\Element\Text);
     }
 
 }
