@@ -32,8 +32,8 @@ class EventTest extends TestCase
     protected function setUp()
     {
         $this->events = new EventManager();
-        $this->sharedEvents = new SharedEventManager();
-        $this->events->setSharedManager($this->sharedEvents);
+//        $this->sharedEvents = new SharedEventManager();
+//        $this->events->setSharedManager($this->sharedEvents);
 
         $this->application = new \EventTest\TestAsset\Application();
         $this->application->setEventManager($this->events);

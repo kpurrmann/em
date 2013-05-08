@@ -38,8 +38,8 @@ class ModuleTest extends TestCase
     public function setUp()
     {
         $this->events = new EventManager();
-        $this->sharedEvents = new SharedEventManager();
-        $this->events->setSharedManager($this->sharedEvents);
+//        $this->sharedEvents = new SharedEventManager();
+//        $this->events->setSharedManager($this->sharedEvents);
 
         $this->application = new TestAsset\Application();
         $this->application->setEventManager($this->events);
@@ -55,7 +55,7 @@ class ModuleTest extends TestCase
     public function tearDown()
     {
         // Need to do this to ensure other tests in suite do not get state
-        StaticEventManager::resetInstance();
+//        StaticEventManager::resetInstance();
     }
 
     protected function getEmptyMockForServiceManager()

@@ -24,13 +24,20 @@ class EventService implements \Zend\EventManager\EventManagerAwareInterface, \Ev
 
     /**
      *
+     * @var \Zend\Mvc\Controller\Plugin\FlashMessenger
+     */
+    protected $flashMessenger;
+
+    /**
+     *
      * @var array
      */
     protected $forms = array();
 
-    public function __construct(\Doctrine\ORM\EntityManager $entityManager)
+    public function __construct(\Doctrine\ORM\EntityManager $entityManager, \Zend\Mvc\Controller\Plugin\FlashMessenger $flashMessenger)
     {
         $this->entityManager = $entityManager;
+        $this->flashMessenger = $flashMessenger;
     }
 
     /**
@@ -120,6 +127,7 @@ class EventService implements \Zend\EventManager\EventManagerAwareInterface, \Ev
             $event->exchangeArray($form->getData());
             $this->entityManager->persist($event);
             $this->entityManager->flush();
+            $this->flashMessenger->addSuccessMessage('Erfolgreich gespeichert.');
         }
     }
 
@@ -129,6 +137,7 @@ class EventService implements \Zend\EventManager\EventManagerAwareInterface, \Ev
         $event = $repo->find($id);
         $this->entityManager->remove($event);
         $this->entityManager->flush();
+        $this->flashMessenger->addSuccessMessage('Gelöscht');
     }
 
 }

@@ -1,7 +1,7 @@
 <phpunit bootstrap="Bootstrap.php" colors="true">
     <testsuites>
-        <testsuite name="Em Module Test">
-            <directory>./EmTest</directory>
+        <testsuite name="Event Module Test">
+            <directory>./EventTest</directory>
         </testsuite>
     </testsuites>
     <filter>

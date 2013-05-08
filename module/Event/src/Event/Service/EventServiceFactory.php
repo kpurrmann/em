@@ -17,7 +17,8 @@ class EventServiceFactory implements \Zend\ServiceManager\FactoryInterface
     {
 //        $sm = $serviceLocator->getServiceLocator();
         $entityManager = $serviceLocator->get('doctrine.entitymanager.orm_default');
-        $service = new \Event\Service\EventService($entityManager);
+        $flashMessenger = $serviceLocator->get('ControllerPluginManager')->get('flashMessenger');
+        $service = new \Event\Service\EventService($entityManager, $flashMessenger);
         return $service;
     }
 

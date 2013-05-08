@@ -64,6 +64,9 @@ return array(
       ),
    ),
    'view_helpers' => array(
+      'factories' => array(
+         'showMessages' => 'Event\View\Helper\ShowMessagesFactory'
+         ),
       'invokables' => array(
          'showForm' => 'Event\View\Helper\ShowForm',
          'HtmlTable' => 'Event\View\Helper\HtmlTable',
