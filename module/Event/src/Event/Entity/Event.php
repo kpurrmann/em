@@ -18,19 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="events")
  */
-class Event implements EventInterface
+class Event extends Entity implements EventInterface
 {
-
-    /**
-     * @Annotation\Type("Zend\Form\Element\Hidden")
-     * @Annotation\Validator({"name":"Digits"})
-     * @Annotation\Required(false)
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     * @var int
-     */
-    protected $id;
 
     /**
      *
@@ -65,20 +54,18 @@ class Event implements EventInterface
 
     /**
      *
+     * @ORM\OneToMany(targetEntity="\Event\Entity\EventGuest", mappedBy="event", cascade={"all"})
+     * @var \Event\Entity\EventGuest
+     */
+    protected $guests;
+
+    /**
+     *
      * @return \Zend\Stdlib\DateTime
      */
     public function getEventDate()
     {
         return $this->event_date->format('d.m.Y');
-    }
-
-    /**
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -97,22 +84,6 @@ class Event implements EventInterface
     public function setEventDate($date)
     {
         $this->event_date = new \Zend\Stdlib\DateTime($date);
-        return $this;
-    }
-
-    /**
-     *
-     * @param type $id
-     * @return \Event\Entity\Event
-     * @throws \InvalidArgumentException
-     */
-    public function setId($id)
-    {
-        if (!is_numeric($id)) {
-            throw new \InvalidArgumentException();
-        }
-
-        $this->id = $id;
         return $this;
     }
 
@@ -145,25 +116,6 @@ class Event implements EventInterface
     {
         $this->description = $description;
         return $this;
-    }
-
-    /**
-     * 
-     * @param array $array
-     */
-    public function exchangeArray(array $array)
-    {
-        $filter = new \Zend\Filter\Word\UnderscoreToCamelCase();
-        foreach ($array as $key => $value) {
-            if (empty($value)) {
-                continue;
-            }
-            $method = 'set' . ucfirst($filter->filter($key));
-            if (!method_exists($this, $method)) {
-                continue;
-            }
-            $this->$method($value);
-        }
     }
 
 }

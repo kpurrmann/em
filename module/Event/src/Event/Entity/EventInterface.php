@@ -10,18 +10,6 @@ interface EventInterface
 {
 
     /**
-     * @return int Returns id of EventEntity
-     */
-    public function getId();
-
-    /**
-     *
-     * @param int $id
-     * @return EventInterface Returns object of type EventInterface
-     */
-    public function setId($id);
-
-    /**
      * @return string Returns title of EventEntity
      */
     public function getTitle();
