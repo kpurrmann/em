@@ -1,0 +1,4 @@
+<h1>Gästeliste</h1>
+<?php echo $this->HtmlTable($this->guests); ?>
+<?php // \Zend\Debug\Debug::dump($this->guests); ?>
+<?php echo $this->paginationControl($this->guests, 'Sliding', array('partial/paginator.phtml', 'Event'), array('route' => 'events/action', 'id' => $this->event->getId())); ?>

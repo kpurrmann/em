@@ -22,17 +22,31 @@ class EventController extends AbstractActionController
      */
     protected $eventService;
 
+    /**
+     * Sets EVentService
+     *
+     * @param \Event\Service\EventServiceInterface $eventService
+     * @return \Event\Controller\EventController
+     */
     public function setEventService(\Event\Service\EventServiceInterface $eventService)
     {
         $this->eventService = $eventService;
         return $this;
     }
 
+    /**
+     *
+     * @return \Event\Service\EventServiceInterface
+     */
     public function getEventService()
     {
         return $this->eventService;
     }
 
+    /**
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
     public function indexAction()
     {
         return new ViewModel(array(
@@ -40,6 +54,10 @@ class EventController extends AbstractActionController
            ));
     }
 
+    /**
+     *
+     * @return \Zend\View\Model\ViewModel
+     */
     public function editAction()
     {
         $form = $this->getEventService()->getForm('update');
@@ -63,12 +81,37 @@ class EventController extends AbstractActionController
            ));
     }
 
+    /**
+     *
+     * @return type
+     */
     public function deleteAction()
     {
         if ($id = $this->params('id')) {
             $this->getEventService()->delete($id);
         }
         return $this->redirect()->toRoute('events');
+    }
+
+    /**
+     * 
+     * @return \Zend\View\Model\ViewModel
+     */
+    public function showAction()
+    {
+        if ($id = $this->params('id')) {
+            $event = $this->getEventService()->getEntry($id);
+            $guests = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\ArrayAdapter($event->getGuests()->toArray()));
+            $guests->setCurrentPageNumber($this->params()->fromQuery('page'));
+
+            return new ViewModel(array(
+                  'event' => $event,
+                  'guests' => $guests
+               ));
+        } else {
+            $this->flashMessenger()->addErrorMessage('Es ist ein Fehler aufgetreten');
+            $this->redirect()->toRoute('events');
+        }
     }
 
 }

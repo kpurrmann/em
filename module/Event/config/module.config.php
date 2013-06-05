@@ -32,7 +32,7 @@ return array(
                         'id' => '[0-9]*',
                      ),
                      'defaults' => array(
-                        'action' => 'index',
+                        'action' => 'show',
                      ),
                   ),
                ),

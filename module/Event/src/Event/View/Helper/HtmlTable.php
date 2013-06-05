@@ -45,11 +45,15 @@ class HtmlTable extends \Zend\View\Helper\AbstractHtmlElement implements \Event\
             $row .= '<td>' . $item->getEventDate() . '</td>';
             $row .= '<td class="controls">
                         <div class="btn-group">
-                            <a class="btn" href="#"><i class="icon-info-sign"></i></a>
+                            <a class="btn" href="' . $this->getView()->url('events/action', array('action' => 'show', 'id' => $item->getId())) . '"><i class="icon-info-sign"></i></a>
                             <a class="btn" href="' . $this->getView()->url('events/action', array('action' => 'edit', 'id' => $item->getId())) . '"><i class="icon-edit"></i></a>
                             <a class="btn btn-danger" href="' . $this->getView()->url('events/action', array('action' => 'delete', 'id' => $item->getId())) . '"><i class="icon-trash"></i></a>
                         </div>
                     </td>';
+        } elseif ($item instanceof \Event\Entity\Guest) {
+            $row .= '<td>' . $item->getId() . '</td>';
+            $row .= '<td>' . $item->getPrename() . ' ' . $item->getLastname() . '</td>';
+            $row .= '<td>' . $item->getEmail() . '</td>';
         }
 
         return '<tr>' . $row . '</tr>';
@@ -60,9 +64,13 @@ class HtmlTable extends \Zend\View\Helper\AbstractHtmlElement implements \Event\
         $head = '';
         if (is_object($item) && $item instanceof \Event\Entity\EventInterface) {
             $head .= '<tr><th> Nr. </th> <th> Titel</th><th>Datum</th>';
+            $head .= '<th class="controls"><a class="btn btn-success" href="' . $this->getView()->url('events/action', array('action' => 'edit')) . '"><i class="icon-plus"></i></a></th>';
         }
 
-        $head .= '<th class="controls"><a class="btn btn-success" href="' . $this->getView()->url('events/action', array('action' => 'edit')) . '"><i class="icon-plus"></i></a></th>';
+        if (is_object($item) && $item instanceof \Event\Entity\Guest) {
+            $head .= '<tr><th> Nr. </th><th>Name</th><th>E-Mail</th>';
+        }
+
         return '<thead>' . $head . '</thead>';
     }
 

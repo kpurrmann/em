@@ -53,11 +53,16 @@ class Event extends Entity implements EventInterface
     protected $event_date;
 
     /**
-     *
-     * @ORM\OneToMany(targetEntity="\Event\Entity\EventGuest", mappedBy="event", cascade={"all"})
-     * @var \Event\Entity\EventGuest
-     */
+     * @Annotation\Exclude()
+     * @ORM\ManyToMany(targetEntity="\Event\Entity\Guest", inversedBy="events")
+     * @ORM\JoinTable(name="events_guests")
+     * */
     protected $guests;
+
+    public function __construct()
+    {
+        $this->guests = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      *
@@ -116,6 +121,11 @@ class Event extends Entity implements EventInterface
     {
         $this->description = $description;
         return $this;
+    }
+
+    public function getGuests()
+    {
+        return $this->guests;
     }
 
 }

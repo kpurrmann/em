@@ -38,11 +38,14 @@ class Guest extends Entity
     protected $email;
 
     /**
-     *
-     * @ORM\OneToMany(targetEntity="\Event\Entity\EventGuest", mappedBy="guest", cascade={"all"})
-     * @var \Event\Entity\EventGuest
-     */
+     * @ORM\ManyToMany(targetEntity="\Event\Entity\Event", mappedBy="guests")
+     * */
     protected $events;
+
+    public function __construct()
+    {
+        $this->events= new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * 

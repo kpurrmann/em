@@ -1,3 +1,3 @@
 <h1>Events</h1>
 <?php echo $this->HtmlTable($this->events); ?>
-<?php // echo s$this->paginationControl($this->events, 'Sliding'); ?>
+<?php echo $this->paginationControl($this->events, 'Sliding', array('partial/paginator.phtml', 'Event'), array('route' => 'events')); ?>
