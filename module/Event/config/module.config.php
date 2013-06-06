@@ -44,7 +44,8 @@ return array(
       'factories' => array(
          'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
          'Event\Form\Event' => 'Event\Form\EventFormFactory',
-         'Event\Service\Event' => 'Event\Service\EventServiceFactory'
+         'Event\Service\Event' => 'Event\Service\EventServiceFactory',
+         'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory'
       ),
       'invokables' => array()
    ),
@@ -66,10 +67,11 @@ return array(
    'view_helpers' => array(
       'factories' => array(
          'showMessages' => 'Event\View\Helper\ShowMessagesFactory'
-         ),
+      ),
       'invokables' => array(
          'showForm' => 'Event\View\Helper\ShowForm',
          'HtmlTable' => 'Event\View\Helper\HtmlTable',
+         'Confirmation' => 'Event\View\Helper\Confirmation',
       ),
    ),
    'view_manager' => array(
@@ -101,5 +103,23 @@ return array(
             ),
          ),
       ),
+   ),
+   'navigation' => array(
+      'default' => array(
+         'events' => array(
+            'type' => 'mvc',
+            'label' => 'Events',
+            'route' => 'events',
+            'pages' => array(
+               'new' => array(
+                  'type' => 'mvc',
+                  'label' => 'Neu erstellen',
+                  'route' => 'events/action',
+                  'action' => 'edit',
+                  'params' => array('id' => ''),
+               ),
+            )
+         ),
+      )
    ),
 );

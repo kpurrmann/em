@@ -54,7 +54,7 @@ class Event extends Entity implements EventInterface
 
     /**
      * @Annotation\Exclude()
-     * @ORM\ManyToMany(targetEntity="\Event\Entity\Guest", inversedBy="events")
+     * @ORM\OneToMany(targetEntity="EventsGuests", mappedBy="event_id")
      * @ORM\JoinTable(name="events_guests")
      * */
     protected $guests;

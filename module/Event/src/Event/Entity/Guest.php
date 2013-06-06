@@ -38,13 +38,14 @@ class Guest extends Entity
     protected $email;
 
     /**
-     * @ORM\ManyToMany(targetEntity="\Event\Entity\Event", mappedBy="guests")
+     * @ORM\OneToMany(targetEntity="\Event\Entity\EventsGuests", mappedBy="guest_id")
+     * @ORM\JoinTable(name="events_guests")
      * */
     protected $events;
 
     public function __construct()
     {
-        $this->events= new \Doctrine\Common\Collections\ArrayCollection();
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

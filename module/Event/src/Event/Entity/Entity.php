@@ -20,7 +20,7 @@ class Entity implements EntityInterface
      * @Annotation\Required(false)
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      * @var int
      */
     protected $id;
