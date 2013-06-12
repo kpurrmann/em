@@ -21,6 +21,9 @@ class Confirmation extends \Zend\View\Helper\AbstractHelper
             case 1:
                 $label = 'Zusage';
                 break;
+            case 2:
+                $label = 'Absage';
+                break;
             default:
                 $label = 'keine Zusage';
                 break;
