@@ -116,7 +116,12 @@ return array(
                   'label' => 'Neu erstellen',
                   'route' => 'events/action',
                   'action' => 'edit',
-                  'params' => array('id' => ''),
+               ),
+               'show' => array(
+                  'type' => 'mvc',
+                  'label' => 'Gästeliste',
+                  'route' => 'events/action',
+                  'action' => 'show',
                ),
             )
          ),
