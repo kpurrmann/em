@@ -43,12 +43,11 @@ class Event extends Entity implements EventInterface
     protected $description;
 
     /**
-     * @Annotation\Type("Zend\Form\Element\Text")
-     * @Annotation\Validator({"name":"Date", "options" : {"format" : "d.m.Y"}})
+     * @Annotation\Type("Zend\Form\Element\DateTimeLocal")
      * @Annotation\Options({"label":"Datum"})
      * @Annotation\Required(true)
      * @ORM\Column(type="datetime")
-     * @var \Zend\Stdlib\DateTime
+     * @var \DateTime
      */
     protected $event_date;
 
@@ -59,18 +58,29 @@ class Event extends Entity implements EventInterface
      * */
     protected $guests;
 
+    /**
+     * @Annotation\Exclude()
+     * @ORM\ManyToMany(targetEntity="Property")
+     * */
+    protected $properties;
+
     public function __construct()
     {
         $this->guests = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->properties = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
      *
-     * @return \Zend\Stdlib\DateTime
+     * @param string $format Set format of return date
+     * @return \DateTime
      */
-    public function getEventDate()
+    public function getEventDate($format = null)
     {
-        return $this->event_date->format('d.m.Y');
+        if ($format == 'string') {
+            return $this->event_date->format('d.m.Y H:i');
+        }
+        return $this->event_date;
     }
 
     /**
@@ -83,12 +93,12 @@ class Event extends Entity implements EventInterface
 
     /**
      *
-     * @param \Zend\Stdlib\DateTime $date
+     * @param \DateTime $date
      * @return \Event\Entity\Event
      */
     public function setEventDate($date)
     {
-        $this->event_date = new \Zend\Stdlib\DateTime($date);
+        $this->event_date = new \DateTime($date);
         return $this;
     }
 
@@ -123,9 +133,22 @@ class Event extends Entity implements EventInterface
         return $this;
     }
 
+    /**
+     *
+     * @return type
+     */
     public function getGuests()
     {
         return $this->guests;
+    }
+
+    /**
+     * 
+     * @return type
+     */
+    public function getProperties()
+    {
+        return $this->properties;
     }
 
 }
