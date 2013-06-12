@@ -42,7 +42,7 @@ class HtmlTable extends \Zend\View\Helper\AbstractHtmlElement implements \Event\
         } elseif ($item instanceof \Event\Entity\EventInterface) {
             $row .= '<td>' . $item->getId() . '</td>';
             $row .= '<td>' . $item->getTitle() . '</td>';
-            $row .= '<td>' . $item->getEventDate() . '</td>';
+            $row .= '<td>' . $item->getEventDate('string') . '</td>';
             $row .= '<td class="controls">
                         <div class="btn-group">
                             <a class="btn" href="' . $this->getView()->url('events/action', array('action' => 'show', 'id' => $item->getId())) . '"><i class="icon-info-sign"></i></a>
