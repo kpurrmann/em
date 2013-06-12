@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Event\Form\Hydrator;
 
 /**
@@ -11,10 +10,14 @@ namespace Event\Form\Hydrator;
 class EventHydrator extends \DoctrineModule\Stdlib\Hydrator\DoctrineObject
 {
 
+    /**
+     *
+     * @param \Event\Entity\EntityInterface $object
+     * @return array
+     */
     public function extractByReference($object)
     {
         $data = parent::extractByReference($object);
-        $data['event_date'] = $data['event_date']->format('d.m.Y');
         return $data;
     }
 
