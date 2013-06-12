@@ -43,9 +43,16 @@ class Guest extends Entity
      * */
     protected $events;
 
+    /**
+     * @ORM\OneToMany(targetEntity="GuestsProperties", mappedBy="guest_id")
+     * @ORM\JoinTable(name="guests_properties")
+     * */
+    protected $properties;
+
     public function __construct()
     {
         $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->properties = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -100,6 +107,29 @@ class Guest extends Entity
     public function setEmail($email)
     {
         $this->email = $email;
+    }
+
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
+     *
+     * @return type
+     */
+    public function getProperties()
+    {
+        return $this->properties;
+    }
+
+    /**
+     *
+     * @param type $properties
+     */
+    public function setProperties($properties)
+    {
+        $this->properties = $properties;
     }
 
 }
