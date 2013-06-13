@@ -2,10 +2,10 @@
     <button class="close" data-dismiss="alert" type="button">x</button>
     <h2><?php echo $this->event->getTitle() ?> &mdash; Gästeliste</h2>
     <ul class="inline">
-        <li>Gäste: <?php echo count($this->guests) ?></li>
-        <li>Zusagen: <?php echo count($this->guests) ?></li>
-        <li>Absagen: <?php echo count($this->guests) ?></li>
-        <li>Offen: <?php echo count($this->guests) ?></li>
+        <li>Gäste: <?php echo $this->guests->getTotalItemCount() ?></li>
+        <li>Zusagen: <?php echo $this->event->getConfirmations(); ?></li>
+        <li>Absagen: <?php echo $this->event->getCancellations(); ?></li>
+        <li>Offen: <?php echo $this->event->getOpens(); ?></li>
     </ul>
 </div>
 <?php echo $this->HtmlTable($this->guests); ?>
