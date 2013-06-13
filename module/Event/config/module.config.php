@@ -45,6 +45,7 @@ return array(
          'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
          'Event\Form\Event' => 'Event\Form\EventFormFactory',
          'Event\Service\Event' => 'Event\Service\EventServiceFactory',
+         'Event\Service\Guest' => 'Event\Service\GuestServiceFactory',
          'navigation' => 'Zend\Navigation\Service\DefaultNavigationFactory'
       ),
       'invokables' => array()
