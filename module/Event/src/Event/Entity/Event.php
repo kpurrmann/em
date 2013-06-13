@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @Annotation\Type("Event\Form\Form")
  * @Annotation\Hydrator("Zend\Stdlib\Hydrator\ObjectProperty")
  * @Annotation\Name("Event")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Event\Repository\EventRepository")
  * @ORM\Table(name="events")
  */
 class Event extends Entity implements EventInterface
@@ -63,6 +63,24 @@ class Event extends Entity implements EventInterface
      * @ORM\ManyToMany(targetEntity="Property")
      * */
     protected $properties;
+
+    /**
+     * @Annotation\Exclude()
+     * @var int Count of Confirmations
+     * */
+    protected $confirmations;
+
+    /**
+     * @Annotation\Exclude()
+     * @var int Count of Cancellations
+     * */
+    protected $cancellations;
+
+    /**
+     * @Annotation\Exclude()
+     * @var int Count of Opens
+     * */
+    protected $opens;
 
     public function __construct()
     {
@@ -149,6 +167,60 @@ class Event extends Entity implements EventInterface
     public function getProperties()
     {
         return $this->properties;
+    }
+
+    /**
+     * 
+     * @return int
+     */
+    public function getConfirmations()
+    {
+        return $this->confirmations;
+    }
+
+    /**
+     *
+     * @param int $confirmations
+     */
+    public function setConfirmations($confirmations)
+    {
+        $this->confirmations = $confirmations;
+    }
+
+    /**
+     *
+     * @return int
+     */
+    public function getCancellations()
+    {
+        return $this->cancellations;
+    }
+
+    /**
+     *
+     * @param int $cancellations
+     */
+    public function setCancellations($cancellations)
+    {
+        $this->cancellations = $cancellations;
+    }
+
+    /**
+     *
+     * @return int
+     */
+    public function getOpens()
+    {
+        return $this->opens;
+    }
+
+    /**
+     *
+     * @param int $opens
+     */
+    public function setOpens($opens)
+    {
+        $this->opens = $opens;
     }
 
 }

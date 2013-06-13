@@ -12,7 +12,7 @@ use Zend\Form\Annotation;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Event\Repository\GuestRepository")
  * @ORM\Table(name="guests", uniqueConstraints={@ORM\UniqueConstraint(name="email_idx", columns={"email"})})
  */
 class Guest extends Entity
