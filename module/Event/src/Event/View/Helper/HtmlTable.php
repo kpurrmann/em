@@ -55,6 +55,12 @@ class HtmlTable extends \Zend\View\Helper\AbstractHtmlElement implements \Event\
             $row .= '<td>' . $item->getGuest()->getPrename() . ' ' . $item->getGuest()->getLastname() . '</td>';
             $row .= '<td>' . $item->getGuest()->getEmail() . '</td>';
             $row .= '<td>' . $this->getView()->confirmation($item->getConfirmation()) . '</td>';
+            $row .= '<td class="controls">
+                        <div class="btn-group">
+                            <a class="btn" href="' . $this->getView()->url('events/action', array('action' => 'show', 'id' => $item->getId())) . '"><i class="icon-info-sign"></i></a>
+                            <a class="btn" href="' . $this->getView()->url('events/action', array('action' => 'edit', 'id' => $item->getId())) . '"><i class="icon-envelope"></i></a>
+                        </div>
+                    </td>';
         }
 
         return '<tr>' . $row . '</tr>';
@@ -69,7 +75,7 @@ class HtmlTable extends \Zend\View\Helper\AbstractHtmlElement implements \Event\
         }
 
         if (is_object($item) && $item instanceof \Event\Entity\EventsGuests) {
-            $head .= '<tr><th> Nr. </th><th>Name</th><th>E-Mail</th><th>Zusage</th>';
+            $head .= '<tr><th> Nr. </th><th>Name</th><th>E-Mail</th><th>Zusage</th><th>&nbsp;</td>';
         }
 
         return '<thead>' . $head . '</thead>';
