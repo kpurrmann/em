@@ -31,4 +31,10 @@ interface GuestServiceInterface
      * @return \Zend\Mvc\Controller\Plugin\FlashMessenger
      */
     public function getFlashMessenger();
+
+    /**
+     *
+     * @param \Event\Entity\Event $event
+     */
+    public function getGuestsByEvent($event);
 }

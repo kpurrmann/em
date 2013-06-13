@@ -22,8 +22,6 @@ class GuestService implements \Event\Service\GuestServiceInterface
      */
     protected $flashMessenger;
 
-
-
     public function getEntityManager()
     {
         return $this->entityManager;
@@ -44,5 +42,15 @@ class GuestService implements \Event\Service\GuestServiceInterface
         $this->flashMessenger = $flashMessenger;
     }
 
+    public function getGuestsByEvent($event)
+    {
+        return $this->entityManager->getRepository('Event\Entity\Guest')->getCountStatusFromEvent($event);
+    }
+
+    public function getStatusByEvent($event, $status = 0)
+    {
+
+        return $this->entityManager->getRepository('Event\Entity\Guest')->getCountStatusFromEvent($event, $status);
+    }
 
 }
