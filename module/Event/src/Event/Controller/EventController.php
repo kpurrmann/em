@@ -18,9 +18,15 @@ class EventController extends AbstractActionController
 
     /**
      *
-     * @var \EventService
+     * @var \Event\Service\EventService
      */
     protected $eventService;
+
+    /**
+     *
+     * @var \Event\Service\GuestService
+     */
+    protected $guestService;
 
     /**
      * Sets EVentService
@@ -41,6 +47,24 @@ class EventController extends AbstractActionController
     public function getEventService()
     {
         return $this->eventService;
+    }
+
+    /**
+     *
+     * @return \Event\Service\GuestServiceInterface
+     */
+    public function getGuestService()
+    {
+        return $this->guestService;
+    }
+
+    /**
+     *
+     * @param \Event\Service\GuestServiceInterface $guestService
+     */
+    public function setGuestService(\Event\Service\GuestServiceInterface $guestService)
+    {
+        $this->guestService = $guestService;
     }
 
     /**
@@ -101,6 +125,9 @@ class EventController extends AbstractActionController
     {
         if ($id = $this->params('id')) {
             $event = $this->getEventService()->getEntry($id);
+            $event->setOpens($this->guestService->getStatusByEvent($event, 0));
+            $event->setCancellations($this->guestService->getStatusByEvent($event, 2));
+            $event->setConfirmations($this->guestService->getStatusByEvent($event, 1));
             $guests = new \Zend\Paginator\Paginator(new \Zend\Paginator\Adapter\ArrayAdapter($event->getGuests()->toArray()));
             $guests->setCurrentPageNumber($this->params()->fromQuery('page'));
 

@@ -16,9 +16,11 @@ class EventControllerFactory implements \Zend\ServiceManager\FactoryInterface
     public function createService(\Zend\ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
         $sm = $serviceLocator->getServiceLocator();
-        $service = $sm->get('Event\Service\Event');
+        $eventService = $sm->get('Event\Service\Event');
+        $guestService = $sm->get('Event\Service\Guest');
         $controller = new EventController();
-        $controller->setEventService($service);
+        $controller->setEventService($eventService);
+        $controller->setGuestService($guestService);
         return $controller;
     }
 
