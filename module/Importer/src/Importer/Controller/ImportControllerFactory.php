@@ -16,6 +16,9 @@ class ImportControllerFactory implements \Zend\ServiceManager\FactoryInterface
     public function createService(\Zend\ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
         $controller = new ImportController();
+        $sm = $serviceLocator->getServiceLocator();
+        $importService = $sm->get('Importer\Service\Import');
+        $controller->setImportService($importService);
         return $controller;
     }
 
