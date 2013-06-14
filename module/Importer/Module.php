@@ -18,7 +18,22 @@ class Module implements \Zend\ModuleManager\Feature\BootstrapListenerInterface, 
 
     public function onBootstrap(\Zend\EventManager\EventInterface $e)
     {
+        $this->serviceLocator = $e->getApplication()->getServiceManager();
+        /* @var $sharedEventManager \Zend\EventManager\SharedEventManager */
+        $sharedEventManager = $this->serviceLocator->get('SharedEventManager');
+        $sharedEventManager->attach('Importer\Service\ImportService', 'set-import-form', array($this, 'onFormSet'));
+    }
 
+    /**
+     * Set up Import Form
+     *
+     * @param \Zend\EventManager\EventInterface $e
+     */
+    public function onFormSet(\Zend\EventManager\EventInterface $e)
+    {
+        $service = $this->serviceLocator->get('Importer\Service\Import');
+        $form = $this->serviceLocator->get('Importer\Form\Import');
+        $service->setForm($form);
     }
 
     public function getConfig()
