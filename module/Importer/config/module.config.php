@@ -32,7 +32,7 @@ return array(
                         'id' => '[0-9]*',
                      ),
                      'defaults' => array(
-                        'action' => 'show',
+                        'action' => 'index',
                      ),
                   ),
                ),
@@ -44,6 +44,13 @@ return array(
       'factories' => array(
          'Importer\Controller\Import' => 'Importer\Controller\ImportControllerFactory'
       ),
+   ),
+   'service_manager' => array(
+      'factories' => array(
+         'Importer\Service\Import' => 'Importer\Service\ImportServiceFactory',
+         'Importer\Form\Import' => 'Importer\Form\ImportFormFactory',
+      ),
+      'invokables' => array()
    ),
    'view_manager' => array(
       'display_not_found_reason' => true,
