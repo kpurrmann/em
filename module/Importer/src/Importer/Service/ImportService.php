@@ -73,7 +73,6 @@ class ImportService implements ImportServiceInterface, \Zend\EventManager\EventM
         return $this->form;
     }
 
-
     /**
      *
      * @param \Importer\Form\ImportForm $form
@@ -128,6 +127,10 @@ class ImportService implements ImportServiceInterface, \Zend\EventManager\EventM
             foreach ($array as $data) {
 
                 if (key_exists('email', $data)) {
+                    $validator = new \Zend\Validator\EmailAddress();
+                    if (!$validator->isValid($data['email'])) {
+                        continue;
+                    }
                     if ($guest = $guestRepository->findOneBy(array('email' => $data['email']))) {
                         
                     } else {
