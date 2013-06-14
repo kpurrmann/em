@@ -15,17 +15,19 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="events_guests")
  */
-class EventsGuests extends Entity
+class EventsGuests
 {
 
     /**
-     * @ORM\ManyToOne(targetEntity="Event", inversedBy="guests")
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="guests", cascade={"persist"})
      * @ORM\JoinColumn(name="event_id", referencedColumnName="id")
      */
     protected $event_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Guest", inversedBy="events")
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Guest", inversedBy="events", cascade={"persist"})
      * @ORM\JoinColumn(name="guest_id", referencedColumnName="id")
      */
     protected $guest_id;
@@ -57,7 +59,6 @@ class EventsGuests extends Entity
         return $this->code;
     }
 
-
     /**
      *
      * @return int
@@ -67,5 +68,24 @@ class EventsGuests extends Entity
         return $this->confirmation;
     }
 
+    public function setEvent($event_id)
+    {
+        $this->event_id = $event_id;
+    }
+
+    public function setGuest($guest_id)
+    {
+        $this->guest_id = $guest_id;
+    }
+
+    public function setCode($code)
+    {
+        $this->code = $code;
+    }
+
+    public function setConfirmation($confirmation)
+    {
+        $this->confirmation = $confirmation;
+    }
 
 }
