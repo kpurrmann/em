@@ -8,6 +8,26 @@
         <li>Offen: <?php echo $this->event->getOpens(); ?></li>
     </ul>
 </div>
+<div class="row-fluid">
+    <input type="text" data-provide="typeahead" data-source='<?php echo $this->guests->toJson() ?>'>
+    <div class="btn-group offset10">
+        <a class="btn" href="<?php echo $this->url('importer/action', array('action' => 'index', 'id' => $this->event->getId())) ?>" title="Import Gäste" role="button" class="btn" data-toggle="modal" data-target="#myModal"><i class="icon-share" ></i></a>
+    </div>
+</div>
 <?php echo $this->HtmlTable($this->guests); ?>
-<?php // \Zend\Debug\Debug::dump($this->guests); ?>
 <?php echo $this->paginationControl($this->guests, 'Sliding', array('partial/paginator.phtml', 'Event'), array('route' => 'events/action', 'id' => $this->event->getId())); ?>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Gästeliste importieren</h3>
+    </div>
+    <div class="modal-body">
+        <p>One fine body…</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Schließen</button>
+    </div>
+</div>
