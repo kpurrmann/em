@@ -132,4 +132,11 @@ class Guest extends Entity
         $this->properties = $properties;
     }
 
+    public function setEvents($events)
+    {
+        $this->events = $events;
+    }
+
+
+
 }
