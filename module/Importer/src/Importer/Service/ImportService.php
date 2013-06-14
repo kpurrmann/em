@@ -7,7 +7,7 @@ namespace Importer\Service;
  *
  * @author Kevin Purrmann <k.purrmann@familie-redlich.de>
  */
-class ImportService implements ImportServiceInterface
+class ImportService implements ImportServiceInterface, \Zend\EventManager\EventManagerAwareInterface
 {
 
     /**
@@ -21,6 +21,29 @@ class ImportService implements ImportServiceInterface
      * @var \Doctrine\ORM\EntityManager
      */
     protected $entityManager;
+
+    /**
+     *
+     * @var \Zend\Mvc\Controller\Plugin\FlashMessenger
+     */
+    protected $flashMessenger;
+    protected $form;
+
+    /**
+     *
+     * @var \Zend\EventManager\EventManager
+     */
+    protected $eventManager;
+
+    public function getFlashMessenger()
+    {
+        return $this->flashMessenger;
+    }
+
+    public function setFlashMessenger($flashMessenger)
+    {
+        $this->flashMessenger = $flashMessenger;
+    }
 
     /**
      *
@@ -42,9 +65,29 @@ class ImportService implements ImportServiceInterface
 
     /**
      *
+     * @return \Importer\Form\ImportForm
+     */
+    public function getForm()
+    {
+        $this->eventManager->trigger('set-import-form', __CLASS__);
+        return $this->form;
+    }
+
+
+    /**
+     *
+     * @param \Importer\Form\ImportForm $form
+     */
+    public function setForm(\Importer\Form\ImportForm $form)
+    {
+        $this->form = $form;
+    }
+
+    /**
+     *
      * @param string $path
      */
-    public function parseExcel($path)
+    public function parseExcel($path, $event)
     {
 
         if (is_file($path)) {
@@ -62,20 +105,20 @@ class ImportService implements ImportServiceInterface
                 }
             }
             if (is_array($array)) {
-                $array = $this->setGuestData($array);
+                $array = $this->setGuestData($array, $event);
             }
         } else {
             throw new \Zend\File\Transfer\Exception();
         }
     }
 
-    private function setGuestData(&$array)
+    private function setGuestData($array, $event)
     {
         $guestRepository = $this->entityManager->getRepository('\Event\Entity\Guest');
         if (is_array($array)) {
 
             // @todo Add option for only update association
-            if ($toDelete = $this->entityManager->getRepository('\Event\Entity\EventsGuests')->findBy(array('event_id' => 1))) {
+            if ($toDelete = $this->entityManager->getRepository('\Event\Entity\EventsGuests')->findBy(array('event_id' => $event))) {
                 foreach ($toDelete as $element) {
                     $this->entityManager->remove($element);
                 }
@@ -103,7 +146,7 @@ class ImportService implements ImportServiceInterface
                     if (!empty($data)) {
                         foreach ($data as $key => $value) {
                             if ($property = $this->entityManager->getRepository('\Event\Entity\Property')->findOneBy(array('identifier' => $key))) {
-
+                                
                             } else {
                                 $property = new \Event\Entity\Property();
                                 $property->setLabel(ucfirst($key));
@@ -129,7 +172,7 @@ class ImportService implements ImportServiceInterface
                     }
 
                     $eventGuest = new \Event\Entity\EventsGuests();
-                    $eventGuest->setEvent($this->entityManager->getRepository('\Event\Entity\Event')->find(1));
+                    $eventGuest->setEvent($this->entityManager->getRepository('\Event\Entity\Event')->find($event));
                     $eventGuest->setGuest($guest);
                     $eventGuest->setConfirmation(0);
                     $eventGuest->setCode(substr(md5(uniqid()), 0, 6));
@@ -167,6 +210,17 @@ class ImportService implements ImportServiceInterface
     public function setEntityManager(\Doctrine\ORM\EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
+    }
+
+    public function getEventManager()
+    {
+        return $this->eventManager;
+    }
+
+    public function setEventManager(\Zend\EventManager\EventManagerInterface $eventManager)
+    {
+        $eventManager->setIdentifiers(array(__CLASS__));
+        $this->eventManager = $eventManager;
     }
 
 }
