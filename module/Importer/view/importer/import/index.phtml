@@ -1,1 +1,5 @@
-<h1>Import</h1>
+<div class="alert alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <p><strong>Wichtig</strong> In der ersten Zeile müssen die Attribute stehen. Ein E-Mail Feld wird benötigt.</p>
+</div>
+<?php echo $this->showForm($this->form, $this->url('importer/action', array('action' => 'index', 'id' => $this->id))) ?>
