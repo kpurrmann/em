@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Kevin Purrmann <k.purrmann@familie-redlich.de>
  * @ORM\Entity
- * @ORM\Table(name="properties")
+ * @ORM\Table(name="properties", uniqueConstraints={@ORM\UniqueConstraint(name="identifier", columns={"identifier"})})
  */
 class Property implements PropertyInterface
 {
@@ -27,6 +27,13 @@ class Property implements PropertyInterface
      * @ORM\Column(type="string")
      * @var string
      */
+    protected $identifier;
+
+    /**
+     *
+     * @ORM\Column(type="string")
+     * @var string
+     */
     protected $label;
 
     /**
@@ -34,7 +41,6 @@ class Property implements PropertyInterface
      * @var type
      */
     protected $events;
-
 
     /**
      * @ORM\OneToMany(targetEntity="GuestsProperties", mappedBy="property_id")
@@ -76,6 +82,16 @@ class Property implements PropertyInterface
     public function setLabel($label)
     {
         $this->label = $label;
+    }
+
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
     }
 
 }
