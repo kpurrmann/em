@@ -105,6 +105,7 @@ class ImportService implements ImportServiceInterface, \Zend\EventManager\EventM
             }
             if (is_array($array)) {
                 $array = $this->setGuestData($array, $event);
+                $this->flashMessenger->addSuccessMessage('Gästeliste wurde erfolgreich importiert.');
             }
         } else {
             throw new \Zend\File\Transfer\Exception();
