@@ -13,7 +13,8 @@ class HtmlTable extends \Zend\View\Helper\AbstractHtmlElement implements \Event\
     public function __invoke(\Zend\Paginator\Paginator $items, $class = 'table-striped')
     {
         $table = '';
-        if (!empty($items)) {
+
+        if (!empty($items) && (0 < $items->getTotalItemCount())) {
             $table .= $this->renderHeader($items->getItem(0));
             $table .= '<tbody>';
             foreach ($items as $row) {
@@ -57,8 +58,6 @@ class HtmlTable extends \Zend\View\Helper\AbstractHtmlElement implements \Event\
             $row .= '<td>' . $this->getView()->confirmation($item->getConfirmation()) . '</td>';
             $row .= '<td class="controls">
                         <div class="btn-group">
-                            <a class="btn" href="' . $this->getView()->url('events/action', array('action' => 'show', 'id' => $item->getId())) . '"><i class="icon-info-sign"></i></a>
-                            <a class="btn" href="' . $this->getView()->url('events/action', array('action' => 'edit', 'id' => $item->getId())) . '"><i class="icon-envelope"></i></a>
                         </div>
                     </td>';
         }
