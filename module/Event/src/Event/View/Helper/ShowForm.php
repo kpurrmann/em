@@ -43,11 +43,47 @@ class ShowForm extends \Zend\View\Helper\AbstractHelper
         $form->prepare();
 
         $output = $this->getView()->form()->openTag($this->form);
+
+        if ($this->isUploadForm()) {
+            $output .= $this->getView()->formFileSessionProgress();
+        }
+
         $output .= $this->renderInputs();
+
+        if ($this->isUploadForm()) {
+            $output .= $this->renderProgressBar();
+        }
+
         $output .= $this->renderSubmitButtons();
         $output .= $this->getView()->form()->closeTag();
-        
+
         return $output;
+    }
+
+    /**
+     *
+     * @return boolean
+     */
+    protected function isUploadForm()
+    {
+        if (preg_match('/multipart/', $this->form->getAttribute('enctype'))) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    protected function renderProgressBar()
+    {
+        return'<div id="progress" class="help-block">
+                    <div class="progress progress-info progress-striped">
+                        <div class="bar"></div>
+                        <p></p>
+                    </div>
+                </div>';
     }
 
     /**
@@ -69,7 +105,7 @@ class ShowForm extends \Zend\View\Helper\AbstractHelper
 
             $element->setLabelAttributes(array('class' => 'control-label'));
             $output .= '<div class="control-group">';
-            if ($element->getLabel()) {
+            if ($element->getLabel() && $element->getAttribute('type') != 'file') {
                 $output .= $this->getView()->formLabel($element);
             }
             $output .= '<div class="controls">';
