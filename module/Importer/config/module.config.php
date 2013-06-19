@@ -62,6 +62,9 @@ return array(
       'template_path_stack' => array(
          __DIR__ . '/../view',
       ),
+      'strategies' => array(
+         'ViewJsonStrategy',
+      )
    ),
    'doctrine' => array(
       'driver' => array(
@@ -74,6 +77,11 @@ return array(
                'Import\Entity' => 'import',
             ),
          ),
+      ),
+   ),
+   'view_helpers' => array(
+      'invokables' => array(
+         'formElement' => 'Importer\View\Helper\FormElement',
       ),
    ),
 );
