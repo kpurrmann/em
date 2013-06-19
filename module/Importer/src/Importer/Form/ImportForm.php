@@ -24,6 +24,7 @@ class ImportForm extends \Event\Form\Form
     {
         $file = new \Zend\Form\Element\File('file');
         $file->setLabel('Datei');
+        $file->setAttribute('id', $file->getName());
         $this->add($file);
 
         $hidden = new \Zend\Form\Element\Hidden('event');

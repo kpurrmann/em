@@ -13,7 +13,7 @@ class ImportFormFactory implements \Zend\ServiceManager\FactoryInterface
     public function createService(\Zend\ServiceManager\ServiceLocatorInterface $serviceLocator)
     {
 
-        $form = new ImportForm();
+        $form = new ImportForm('import');
         return $form;
     }
 
